@@ -1,0 +1,45 @@
+#spring:
+#    profiles:
+#     active: local
+---
+#spring:
+#  profiles: local
+server:
+  port: 8081
+spring:
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:3306/productdb?useUnicode=true&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
+    username: root
+    password: root
+    driverClassName: com.mysql.cj.jdbc.Driver
+  jpa:
+   
+    hibernate:
+      ddl-auto: update
+  kafka:
+    template:
+     default-topic: order-events
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.LongSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    admin:
+     properties:
+        bootstrap.servers:  localhost:9092
+---
+#spring:
+#  profiles: dev
+#  kafka:
+#    producer:
+#      bootstrap-servers: dev:9092
+#      key-serializer: org.apache.kafka.common.serialization.IntegerSerializer
+#      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+#
+#---
+#spring:
+#  profiles: prod
+#  kafka:
+#    producer:
+#      bootstrap-servers: prod:9092
+#      key-serializer: org.apache.kafka.common.serialization.IntegerSerializer
+#      value-serializer: org.apache.kafka.common.serialization.StringSerializer
